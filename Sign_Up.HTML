@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ZOVYA Gifts Sign Up</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: url("images/Login_page.jpg") center/cover;
+            min-height: 100vh;
+        }
+
+        .home a {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 20px;
+            background: white;
+            color: #a0208b;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .account {
+            background: white;
+            width: 350px;
+            max-width: calc(100% - 60px);
+            margin: 20px auto;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+        }
+
+        h1 {
+            color: #a0208b;
+        }
+
+        p {
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background: #a0208b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #80176f;
+        }
+
+        .login a {
+            color: #a0208b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer {
+            color: gray;
+            font-size: 13px;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="home">
+        <a href="ZOVYA.HTML">🏠 Home</a>
+    </div>
+
+    <div class="account">
+
+        <img src="images/logo.png" alt="ZOVYA Logo">
+
+        <h1>Create Account</h1>
+        <p>Create your ZOVYA_Gifts account</p>
+
+        <form action="#" method="get">
+
+            <input type="text" name="name"
+                   placeholder="Enter your name" required>
+
+            <input type="email" name="email"
+                   placeholder="Enter your email" required>
+
+            <input type="tel" name="phone"
+                   placeholder="Enter your phone number" required>
+
+            <input type="password" name="password"
+                   placeholder="Create a password" required>
+
+            <button type="submit">Create Account</button>
+
+        </form>
+
+        <p class="login">
+            Already have an account?
+            <a href="Login.HTML">Login</a>
+        </p>
+
+        <div class="footer">
+            Welcome to ZOVYA_Gifts!<br>
+            Gifts for every special occasion.
+        </div>
+
+    </div>
+
+</body>
+</html>

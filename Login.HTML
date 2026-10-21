@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ZOVYA_Gifts_Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+
+            background-image: url("images/Login_page.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 80px 15px 30px;
+        }
+
+        /* Home Button */
+        .home-button {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+        }
+
+        .home-button button {
+            padding: 10px 18px;
+            font-size: 15px;
+            background-color: white;
+            color: #9f2089;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* Login Card */
+        .login-box {
+            width: 380px;
+            max-width: 100%;
+            background-color: white;
+            padding: 35px 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Logo */
+        .logo {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: contain;
+        }
+
+        .login-box h1 {
+            font-size: 25px;
+            color: #9f2089;
+            margin: 15px 0 8px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* Input Fields */
+        .input-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 13px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #9f2089;
+        }
+
+        /* Forgot Password */
+        .forgot-password {
+            text-align: right;
+            margin-top: -5px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #9f2089;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        /* Login Button */
+        .login-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 6px;
+            background-color: #9f2089;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background-color: #7b176a;
+        }
+
+        /* Sign Up */
+        .signup-text {
+            margin-top: 22px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .signup-text a {
+            color: #9f2089;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .signup-text a:hover,
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .bottom-text {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+            line-height: 1.5;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 28px 20px;
+            }
+
+            .login-box h1 {
+                font-size: 22px;
+            }
+
+            .home-button {
+                top: 15px;
+                left: 15px;
+            }
+        }
+        
+        /* Create Account Button */
+.create-account-btn {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    margin-top: 15px;
+    background-color: white;
+    color: #9f2089;
+    border: 2px solid #9f2089;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.create-account-btn:hover {
+    background-color: #f8eafa;
+}
+    </style>
+</head>
+
+<body>
+
+    <!-- Home Button -->
+    <div class="home-button">
+        <a href="ZOVYA.HTML">
+            <button type="button">🏠 Home</button>
+        </a>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-box">
+
+        <img
+            src="images/logo.png"
+            alt="ZOVYA Logo"
+            class="logo"
+        >
+
+        <h1>Welcome Back!</h1>
+
+        <p class="subtitle">
+            Login to your ZOVYA_Gifts account
+        </p>
+
+        <form action="#" method="post">
+
+            <div class="input-group">
+                <label for="email">Email or Mobile Number</label>
+
+                <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email or phone"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <div class="forgot-password">
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+            <a href="Sign_In.HTML" class="create-account-btn">
+    Create Account / Sign Up
+</a>
+
+
+        </form>
+
+        <div class="signup-text">
+            Don't have an account?
+            <a href="Sign_In.HTML">Create Account</a>
+        </div>
+
+        <p class="bottom-text">
+            Welcome to ZOVYA_Gifts!<br>
+            Discover gifts for every special occasion.
+        </p>
+
+    </div>
+
+</body>
+
+</html>

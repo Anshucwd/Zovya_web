@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ZOVYA - My Account</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: #333;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: normal;
+        }
+
+        .header-icons a {
+            color: #333;
+            text-decoration: none;
+            font-size: 25px;
+            margin-left: 15px;
+        }
+
+        /* Profile */
+        .profile {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 25px 22px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-image {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background-color: #f8e5f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 35px;
+        }
+
+        .profile h3 {
+            margin: 0 0 7px;
+            font-size: 18px;
+        }
+
+        .profile p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .profile-arrow {
+            font-size: 28px;
+            color: #555;
+            text-decoration: none;
+        }
+
+        /* Help Centre and Refer & Earn */
+        .quick-options {
+            display: flex;
+            gap: 12px;
+            padding: 20px 22px;
+        }
+
+        .quick-card {
+            flex: 1;
+            padding: 20px 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 14px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .quick-card span {
+            display: block;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        /* Account Sections */
+        .section {
+            padding: 10px 22px;
+        }
+
+        .section h3 {
+            font-size: 17px;
+            margin: 20px 0 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 0;
+            border-bottom: 1px solid #ddd;
+            color: #444;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .option-icon {
+            width: 40px;
+            font-size: 22px;
+            text-align: center;
+        }
+
+        .option:hover,
+        .quick-card:hover {
+            background-color: #faf5fa;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background-color: white;
+            border-top: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .bottom-nav a {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .bottom-nav span {
+            display: block;
+            font-size: 23px;
+            margin-bottom: 5px;
+        }
+
+        .bottom-nav .active {
+            color: #9f2089;
+            font-weight: bold;
+        }
+
+        /* Mobile and Desktop */
+        @media (min-width: 700px) {
+            body {
+                max-width: 500px;
+                margin: auto;
+                border-left: 1px solid #eee;
+                border-right: 1px solid #eee;
+            }
+
+            .bottom-nav {
+                left: 50%;
+                transform: translateX(-50%);
+                max-width: 500px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+
+        <h2>ACCOUNT</h2>
+
+        <div class="header-icons">
+            <a href="Product.HTML" aria-label="Search">⌕</a>
+            <a href="Product.HTML" aria-label="Shopping Cart">🛒</a>
+        </div>
+
+    </header>
+
+    <!-- Profile Section -->
+    <div class="profile">
+
+        <div class="profile-left">
+
+            <div class="profile-image">👤</div>
+
+            <div>
+                <h3>Welcome to ZOVYA</h3>
+                <p>Manage your account</p>
+            </div>
+
+        </div>
+
+        <a href="Login.HTML" class="profile-arrow">›</a>
+
+    </div>
+
+    <!-- Quick Options -->
+    <div class="quick-options">
+
+        <a href="Login.HTML" class="quick-card">
+            <span>📞</span>
+            Help Centre
+        </a>
+
+        <a href="Sign_In.HTML" class="quick-card">
+            <span>🎁</span>
+            Refer & Earn
+        </a>
+
+    </div>
+
+    <!-- My Payments -->
+    <section class="section">
+
+        <h3>My Payments</h3>
+
+        <a href="Login.HTML" class="option">
+            <span class="option-icon">💳</span>
+            Bank & UPI Details
+        </a>
+
+        <a href="Login.HTML" class="option">
+            <span class="option-icon">💰</span>
+            Payment & Refund
+        </a>
+
+    </section>
+
+    <!-- My Activity -->
+    <section class="section">
+
+        <h3>My Activity</h3>
+
+        <a href="Product.HTML" class="option">
+            <span class="option-icon">❤️</span>
+            Wishlisted Products
+        </a>
+
+        <a href="Product.HTML" class="option">
+            <span class="option-icon">🔗</span>
+            Shared Products
+        </a>
+
+        <a href="Product.HTML" class="option">
+            <span class="option-icon">🏬</span>
+            Followed Shops
+        </a>
+
+    </section>
+
+    <!-- Others -->
+    <section class="section">
+
+        <h3>Others</h3>
+
+        <a href="Login.HTML" class="option">
+            <span class="option-icon">👤</span>
+            Login / Sign Up
+        </a>
+
+        <a href="ZOVYA.HTML" class="option">
+            <span class="option-icon">🏠</span>
+            Back to Home
+        </a>
+
+    </section>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+
+        <a href="ZOVYA.HTML">
+            <span>⌂</span>
+            Home
+        </a>
+
+        <a href="Product.HTML">
+            <span>▦</span>
+            Categories
+        </a>
+
+        <a href="Product.HTML">
+            <span>📦</span>
+            My Orders
+        </a>
+
+        <a href="Account.HTML" class="active">
+            <span>👤</span>
+            Account
+        </a>
+
+    </nav>
+
+</body>
+
+</html>

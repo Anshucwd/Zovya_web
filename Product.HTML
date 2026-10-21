@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ZOVYA_Gift_Product</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to right, #e3f2fd, white);
+        }
+
+        h1 {
+            text-align: center;
+            color: #8e2875;
+        }
+
+        .home-button {
+            margin: 20px 0;
+        }
+
+        button,
+        select,
+        input {
+            padding: 10px;
+            border: 1px solid #90caf9;
+            border-radius: 20px;
+        }
+
+        button {
+            background: white;
+            color: #8e2875;
+            cursor: pointer;
+        }
+
+        .price-filter {
+            margin: 20px 0;
+        }
+
+        .price-filter select {
+            width: 200px;
+            height: 40px;
+            background: white;
+        }
+
+        .search-product {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .search-product input {
+            width: 280px;
+            max-width: 90%;
+            background: white;
+        }
+
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 35px auto;
+        }
+
+        .Product-box {
+            width: 350px;
+            max-width: 100%;
+            padding: 18px;
+            text-align: center;
+            background: white;
+            border: 1px solid #d6e8f7;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px #d4e5f5;
+            transition: 0.3s;
+        }
+
+        .Product-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 18px #c5dff5;
+        }
+
+        .Product-box img {
+            width: 250px;
+            height: 300px;
+            max-width: 100%;
+            object-fit: contain;
+            cursor: pointer;
+        }
+
+        .product-name {
+            font-size: 21px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .price {
+            color: #c2185b;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .login-link {
+            display: inline-block;
+            padding: 13px 23px;
+            margin-top: 10px;
+            background: #8e2875;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+
+        .login-link:hover {
+            background: #641653;
+        }
+
+        /* Product Details Popup */
+
+        .details-popup {
+            display: none;
+            position: fixed;
+            inset: 0;
+            overflow-y: auto;
+            z-index: 1000;
+            background: linear-gradient(to right, #e3f2fd, white);
+        }
+
+        .details-popup:target {
+            display: block;
+        }
+
+        .details-card {
+            min-height: 100vh;
+            padding: 70px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .details-card img {
+            width: 350px;
+            height: 430px;
+            max-width: 45%;
+            object-fit: contain;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px #c5dff5;
+        }
+
+        .details-info {
+            max-width: 600px;
+        }
+
+        .details-info h2 {
+            color: #8e2875;
+            font-size: 30px;
+        }
+
+        .details-info p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .close-button {
+            position: fixed;
+            top: 15px;
+            right: 25px;
+            font-size: 38px;
+            text-decoration: none;
+            color: #8e2875;
+            z-index: 1001;
+        }
+
+        /* Login and Back Buttons */
+
+        .detail-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 13px 23px;
+            margin-top: 10px;
+            background: #8e2875;
+            color: white;
+            text-decoration: none;
+            border: 1px solid #8e2875;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+            background: #641653;
+            color: white;
+        }
+
+        @media (max-width: 650px) {
+            .details-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+                padding: 65px 20px 30px;
+            }
+
+            .details-card img {
+                width: 260px;
+                height: 300px;
+                max-width: 100%;
+            }
+
+            .details-info h2 {
+                font-size: 25px;
+            }
+
+            .details-info p {
+                font-size: 16px;
+            }
+
+            .detail-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Selling Product 🎁</h1>
+
+    <div class="home-button">
+        <a href="ZOVYA.HTML">
+            <button>🏠 Home</button>
+        </a>
+    </div>
+
+    <div class="price-filter">
+        <select>
+            <option selected disabled>Product Price</option>
+            <option>None</option>
+            <option>₹0-200</option>
+            <option>₹200-500</option>
+            <option>₹500-800</option>
+            <option>₹800-1100</option>
+            <option>₹1100-1500</option>
+            <option>₹1500-2000</option>
+        </select>
+    </div>
+
+    <div class="search-product">
+        <input type="text" placeholder="Search product 🔍">
+    </div>
+
+    <!-- All Products -->
+
+    <div class="products">
+
+        <!-- Product 1 -->
+
+        <div class="Product-box">
+
+            <a href="#babaDetails">
+                <img src="images/product_1.jpg" alt="Baba Shyam Image">
+            </a>
+
+            <p class="product-name">Baba Shyam Image</p>
+
+            <p class="price">Price: ₹399</p>
+
+            <a href="payment.html" class="login-link">BUY PRODUCT</a>
+
+        </div>
+
+        <!-- Product 2 -->
+
+        <div class="Product-box">
+
+            <a href="#khatuDetails">
+                <img src="images/product_2.jpg" alt="Khatushyam Photo">
+            </a>
+
+            <p class="product-name">Khatushyam Photo</p>
+
+            <p class="price">Price: ₹599</p>
+
+            <a href="payment.html" class="login-link">BUY PRODUCT</a>
+
+        </div>
+
+        <!-- Product 3 -->
+
+        <div class="Product-box">
+
+            <a href="#nature3Details">
+                <img src="images/product3.jpg" alt="Nature View">
+            </a>
+
+            <p class="product-name">Nature View</p>
+
+            <p class="price">Price: ₹499</p>
+
+            <a href="payment.html" class="login-link">BUY PRODUCT</a>
+
+        </div>
+
+        <!-- Product 4 -->
+
+        <div class="Product-box">
+
+            <a href="#nature4Details">
+                <img src="images/product4.jpg" alt="Purple Tree Nature View">
+            </a>
+
+            <p class="product-name">Purple Tree Nature View</p>
+
+            <p class="price">Price: ₹499</p>
+
+            <a href="payment.html" class="login-link">BUY PRODUCT</a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Baba Shyam Details -->
+
+    <div id="babaDetails" class="details-popup">
+
+        <a href="#" class="close-button">&times;</a>
+
+        <div class="details-card">
+
+            <img src="images/product_1.jpg" alt="Baba Shyam Image">
+
+            <div class="details-info">
+
+                <h2>Baba Shyam Image</h2>
+
+                <p class="price">Price: ₹399</p>
+
+                <p>
+                    Baba Shyam ji ki beautiful image.
+                    Ye aapke ghar ya pooja room ke liye achha gift hai.
+                </p>
+
+                <p><strong>Category:</strong> Religious Gift</p>
+
+                <p><strong>Colour:</strong> Image ke according</p>
+
+                <div class="detail-buttons">
+
+                    <a href="Login.HTML" class="login-link">
+                        Login to Continue
+                    </a>
+
+                    <a href="#" class="back-button">
+                        ← Back
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Khatushyam Details -->
+
+    <div id="khatuDetails" class="details-popup">
+
+        <a href="#" class="close-button">&times;</a>
+
+        <div class="details-card">
+
+            <img src="images/product_2.jpg" alt="Khatushyam Photo">
+
+            <div class="details-info">
+
+                <h2>Khatushyam Photo</h2>
+
+                <p class="price">Price: ₹599</p>
+
+                <p>
+                    Khatushyam ji ki photo.
+                    Aap ise apne ghar mein rakh sakte hain
+                    ya kisi ko gift kar sakte hain.
+                </p>
+
+                <p><strong>Category:</strong> Religious Gift</p>
+
+                <p><strong>Colour:</strong> Image ke according</p>
+
+                <div class="detail-buttons">
+
+                    <a href="Login.HTML" class="login-link">
+                        Login to Continue
+                    </a>
+
+                    <a href="#" class="back-button">
+                        ← Back
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Product 3 Details -->
+
+    <div id="nature3Details" class="details-popup">
+
+        <a href="#" class="close-button">&times;</a>
+
+        <div class="details-card">
+
+            <img src="images/product3.jpg" alt="Nature View">
+
+            <div class="details-info">
+
+                <h2>Nature View</h2>
+
+                <p class="price">Price: ₹499</p>
+
+                <p>
+                    Beautiful mountain view aur colourful flowers ki picture.
+                    Ye aapke ghar ki decoration ke liye ek achha option hai.
+                </p>
+
+                <p><strong>Category:</strong> Nature Decoration</p>
+
+                <p><strong>Colour:</strong> Multicolour</p>
+
+                <div class="detail-buttons">
+
+                    <a href="Login.HTML" class="login-link">
+                        Login to Continue
+                    </a>
+
+                    <a href="#" class="back-button">
+                        ← Back
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Product 4 Details -->
+
+    <div id="nature4Details" class="details-popup">
+
+        <a href="#" class="close-button">&times;</a>
+
+        <div class="details-card">
+
+            <img src="images/product4.jpg" alt="Purple Tree Nature View">
+
+            <div class="details-info">
+
+                <h2>Purple Tree Nature View</h2>
+
+                <p class="price">Price: ₹499</p>
+
+                <p>
+                    Beautiful nature painting with a purple flowering tree,
+                    green mountains, a peaceful lake and a lovely walking path.
+                    Ye picture aapke ghar ki decoration ke liye ek achha option hai.
+                </p>
+
+                <p><strong>Category:</strong> Nature Decoration</p>
+
+                <p><strong>Colour:</strong> Purple, Green and Blue</p>
+
+                <div class="detail-buttons">
+
+                    <a href="Login.HTML" class="login-link">
+                        Login to Continue
+                    </a>
+
+                    <a href="#" class="back-button">
+                        ← Back
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

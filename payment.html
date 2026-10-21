@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ZOVYA Gifts - Payment Method</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            color: #333;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .back-button {
+            font-size: 28px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .header h2 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .step {
+            margin-left: auto;
+            border: 1px solid #8ba8df;
+            color: #688bd0;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .offer {
+            background: #dff7ef;
+            color: #16866a;
+            text-align: center;
+            padding: 22px 10px;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .offer span {
+            color: #333;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 25px auto;
+            padding: 15px;
+        }
+
+        .container h3 {
+            font-size: 21px;
+            margin-bottom: 25px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid #d4d4dc;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            padding: 22px 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .payment-option:hover {
+            border-color: #92278f;
+            box-shadow: 0 3px 12px #e1d3e1;
+        }
+
+        .payment-option:has(input:checked) {
+            border: 2px solid #92278f;
+            background: #fffaff;
+        }
+
+        .price {
+            min-width: 100px;
+            border-right: 1px dashed #ccc;
+            padding-right: 12px;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .payment-name {
+            flex: 1;
+            font-size: 17px;
+            font-weight: bold;
+            padding-left: 15px;
+        }
+
+        .payment-option input {
+            width: 21px;
+            height: 21px;
+            accent-color: #92278f;
+            cursor: pointer;
+        }
+
+        .discount {
+            color: #16866a;
+        }
+
+        .save {
+            display: inline-block;
+            background: #d9f5ec;
+            color: #16866a;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-top: 7px;
+        }
+
+        .extra-info {
+            background: #f0f1f8;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .price-details {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+        }
+
+        .price-details h3 {
+            margin-top: 0;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            gap: 10px;
+        }
+
+        .total {
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+            font-size: 19px;
+            font-weight: bold;
+        }
+
+        .bottom {
+            background: white;
+            padding: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            position: sticky;
+            bottom: 0;
+            box-shadow: 0 -3px 10px #ddd;
+        }
+
+        .bottom-price {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .bottom small {
+            display: block;
+            color: #92278f;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+
+        .order-button {
+            background: #92278f;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 16px 28px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .order-button:hover {
+            background: #741d71;
+        }
+
+        .reselling {
+            background: white;
+            padding: 20px;
+            margin-top: 22px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @media (max-width: 450px) {
+            .header {
+                padding: 15px 10px;
+                gap: 8px;
+            }
+
+            .header h2 {
+                font-size: 16px;
+            }
+
+            .step {
+                font-size: 10px;
+                padding: 6px;
+            }
+
+            .price {
+                min-width: 75px;
+                font-size: 17px;
+            }
+
+            .payment-name {
+                font-size: 14px;
+                padding-left: 10px;
+            }
+
+            .payment-option {
+                padding: 18px 10px;
+            }
+
+            .order-button {
+                padding: 14px 17px;
+                font-size: 14px;
+            }
+
+            .bottom {
+                padding: 14px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <a href="product.html" class="back-button">&larr;</a>
+
+        <h2>PAYMENT METHOD</h2>
+
+        <span class="step">STEP 2/2</span>
+    </div>
+
+    <div class="offer">
+        ₹29 OFF <span>on this order</span>
+    </div>
+
+    <div class="container">
+
+        <h3>Select payment method</h3>
+
+        <form action="order-success.html" method="get">
+
+            <!-- Cash on Delivery -->
+
+            <label class="payment-option">
+
+                <span class="price">₹599</span>
+
+                <span class="payment-name">
+                    Cash on Delivery
+                </span>
+
+                <input type="radio"
+                       name="payment"
+                       value="Cash on Delivery"
+                       required>
+
+            </label>
+
+
+            <!-- Ask Friends to Pay -->
+
+            <label class="payment-option">
+
+                <span class="price">
+                    <span class="discount">₹572</span>
+                    <br>
+                    <span class="save">Save ₹27</span>
+                </span>
+
+                <span class="payment-name">
+                    Ask Friends to Pay
+                </span>
+
+                <input type="radio"
+                       name="payment"
+                       value="Ask Friends to Pay">
+
+            </label>
+
+
+            <!-- Pay Online -->
+
+            <label class="payment-option">
+
+                <span class="price">
+                    <span class="discount">₹572</span>
+                    <br>
+                    <span class="save">Save ₹27</span>
+                </span>
+
+                <span class="payment-name">
+                    Pay Online
+                </span>
+
+                <input type="radio"
+                       name="payment"
+                       value="Pay Online">
+
+            </label>
+
+
+            <div class="extra-info">
+                Select your preferred payment method to continue.
+                Online payment is a demo feature and does not process
+                real payments.
+            </div>
+
+
+            <!-- Price Details -->
+
+            <div class="price-details" id="priceDetails">
+
+                <h3>Price Details</h3>
+
+                <div class="price-row">
+                    <span>Product Price</span>
+                    <span>₹599</span>
+                </div>
+
+                <div class="price-row">
+                    <span>Discount</span>
+                    <span class="discount">- ₹29</span>
+                </div>
+
+                <div class="price-row total">
+                    <span>Total Amount</span>
+                    <span>₹570</span>
+                </div>
+
+            </div>
+
+
+            <!-- Reselling -->
+
+            <div class="reselling">
+                <span>Reselling the order?</span>
+                <span>&#10095;</span>
+            </div>
+
+
+            <!-- Place Order -->
+
+            <div class="bottom">
+
+                <div>
+                    <div class="bottom-price">₹570</div>
+
+                    <a href="#priceDetails"
+                       style="text-decoration:none;">
+
+                        <small>VIEW PRICE DETAILS</small>
+
+                    </a>
+                </div>
+
+                <button type="submit" class="order-button">
+                    Place Order
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+</html>
