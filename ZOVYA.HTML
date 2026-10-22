@@ -12,9 +12,57 @@
 
         /* Heading */
         header {
+            position: relative;
             text-align: center;
             padding: 10px;
             background: #fff0f6;
+        }
+
+        .account-badge {
+            position: absolute;
+            top: 24px;
+            right: 30px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: calc(100% - 24px);
+        }
+
+        .account-name {
+            max-width: 220px;
+            color: #8e2875;
+            font-size: 15px;
+            font-weight: 700;
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .account-circle {
+            position: relative;
+            flex: 0 0 56px;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 50%;
+            background: #8e2875;
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+        }
+
+        .account-circle img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .account-circle:hover {
+            background: #6f1e5c;
         }
 
         header h1 {
@@ -89,6 +137,26 @@
         }
 
         @media (max-width: 600px) {
+            .account-badge {
+                top: 10px;
+                right: 12px;
+                gap: 6px;
+            }
+
+            .account-name {
+                max-width: 125px;
+                font-size: 12px;
+            }
+
+            .account-circle {
+                flex-basis: 44px;
+                width: 44px;
+                height: 44px;
+            }
+
+            header {
+                padding-top: 62px;
+            }
             header h1 {
                 font-size: 27px;
             }
@@ -105,6 +173,14 @@
 
     <!-- Website Heading -->
     <header>
+                <div class="account-badge">
+            <span class="account-name" id="accountName" hidden></span>
+            <a class="account-circle" href="Account.HTML" aria-label="Account" title="Account">
+                <span id="accountPlaceholder" aria-hidden="true">👤</span>
+                <img id="accountPhoto" alt="" hidden>
+            </a>
+        </div>
+
         <h1>Welcome to ZOVYA_Gifts 🎁</h1>
         <p>Make Every Occasion Special ❤️</p>
     </header>
@@ -121,7 +197,6 @@
 
             <a href="Sign_Up.HTML"><button>Sign_Up</button></a>
 
-            <a href="Account.HTML"><button>👤 Account</button></a>
         </nav>
 
         <!-- Existing Background Photo: Unchanged -->
@@ -147,5 +222,68 @@
         <p> ZOVYA_Gifts | Gifts Made With Love ❤️ </p>
     </footer>
 
+
+    <script>
+        (() => {
+            const legacyStorageKey = 'zovya.profilePhoto.v1';
+            const photoKeyPrefix = 'zovya.profilePhoto.user.';
+            let currentStorageKey = '';
+            const photo = document.getElementById('accountPhoto');
+            const placeholder = document.getElementById('accountPlaceholder');
+
+            function showSavedPhoto(savedPhoto) {
+                if (savedPhoto && /^data:image\/(jpeg|png|webp);base64,/i.test(savedPhoto)) {
+                    photo.src = savedPhoto;
+                    photo.hidden = false;
+                    placeholder.hidden = true;
+                } else {
+                    photo.removeAttribute('src');
+                    photo.hidden = true;
+                    placeholder.hidden = false;
+                }
+            }
+
+            function loadPhotoForCurrentUser() {
+                if (!currentStorageKey) {
+                    showSavedPhoto(null);
+                    return;
+                }
+                const oldPhoto = localStorage.getItem(legacyStorageKey);
+                if (oldPhoto) {
+                    if (!localStorage.getItem(currentStorageKey)) {
+                        localStorage.setItem(currentStorageKey, oldPhoto);
+                    }
+                    localStorage.removeItem(legacyStorageKey);
+                }
+                showSavedPhoto(localStorage.getItem(currentStorageKey));
+            }
+
+            async function showSignedInName() {
+                try {
+                    const response = await fetch('/api/me', { cache: 'no-store' });
+                    if (!response.ok) return;
+                    const result = await response.json();
+                    if (result.authenticated && result.user) {
+                        currentStorageKey = photoKeyPrefix + String(result.user.id);
+                        const greeting = document.getElementById('accountName');
+                        greeting.textContent = result.user.name;
+                        greeting.hidden = false;
+                        loadPhotoForCurrentUser();
+                    } else {
+                        showSavedPhoto(null);
+                    }
+                } catch (error) {
+                    // Leave the greeting hidden outside the local web server.
+                    showSavedPhoto(null);
+                }
+            }
+
+            showSignedInName();
+            window.addEventListener('storage', event => {
+                if (event.key === currentStorageKey) showSavedPhoto(event.newValue);
+                else if (event.key === null) loadPhotoForCurrentUser();
+            });
+        })();
+    </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ZOVYA Gifts Sign Up</title>
+    <title>ZOVYA_Gifts Sign Up</title>
 
     <style>
         body {
@@ -71,6 +71,8 @@
             background: #80176f;
         }
 
+
+
         .login a {
             color: #a0208b;
             text-decoration: none;
@@ -99,7 +101,7 @@
         <h1>Create Account</h1>
         <p>Create your ZOVYA_Gifts account</p>
 
-        <form action="#" method="get">
+        <form id="signup-form" action="http://localhost:8000/api/signup" method="post">
 
             <input type="text" name="name"
                    placeholder="Enter your name" required>
@@ -110,11 +112,10 @@
             <input type="tel" name="phone"
                    placeholder="Enter your phone number" required>
 
-            <input type="password" name="password"
+            <input type="password" name="password" autocomplete="new-password" minlength="8"
                    placeholder="Create a password" required>
 
             <button type="submit">Create Account</button>
-
         </form>
 
         <p class="login">

@@ -58,6 +58,8 @@
         }
 
         .profile-image {
+            position: relative;
+            flex: 0 0 65px;
             width: 65px;
             height: 65px;
             border-radius: 50%;
@@ -66,6 +68,30 @@
             justify-content: center;
             align-items: center;
             font-size: 35px;
+        }
+
+        .profile-camera {
+            position: absolute;
+            right: -3px;
+            bottom: -3px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            border-radius: 50%;
+            background: #9f2089;
+        }
+
+        .profile-camera svg {
+            width: 13px;
+            height: 13px;
+            fill: none;
+            stroke: white;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .profile h3 {
@@ -187,6 +213,73 @@
                 max-width: 500px;
             }
         }
+    
+        .profile-photo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-camera {
+            z-index: 1;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .profile-camera:focus-visible {
+            outline: 3px solid #e7abd9;
+            outline-offset: 2px;
+        }
+    
+        .profile-photo {
+            cursor: zoom-in;
+        }
+
+        .photo-viewer {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 24px;
+            background: rgba(25, 12, 24, 0.82);
+        }
+
+        .photo-viewer[hidden] {
+            display: none;
+        }
+
+        .photo-viewer-image {
+            width: min(72vw, 320px);
+            height: min(72vw, 320px);
+            max-height: 70vh;
+            border: 4px solid white;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-photo-preview {
+            width: 48px;
+            height: 48px;
+            border: 2px solid white;
+            border-radius: 50%;
+            background: #9f2089;
+            color: white;
+            font-size: 30px;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .close-photo-preview:hover {
+            background: #6f1e5c;
+        }
     </style>
 </head>
 
@@ -209,11 +302,20 @@
 
         <div class="profile-left">
 
-            <div class="profile-image">👤</div>
-
+            <div class="profile-image" id="profileImage" aria-label="Profile photo">
+                <span id="profilePlaceholder" aria-hidden="true">👤</span>
+                <img class="profile-photo" id="profilePhoto" alt="Your profile photo" hidden>
+                <button class="profile-camera" id="profilePhotoButton" type="button" aria-label="Choose a profile photo" title="Choose a profile photo">
+                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                        <path d="M8.2 5 9.5 3.5h5L15.8 5H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3.2Z" />
+                        <circle cx="12" cy="12" r="3.2" />
+                    </svg>
+                </button>
+            </div>
+            <input id="profilePhotoInput" type="file" accept="image/*" hidden>
             <div>
-                <h3>Welcome to ZOVYA</h3>
-                <p>Manage your account</p>
+                <h3 id="accountUserName">Welcome to ZOVYA</h3>
+                <p id="accountUserInfo">Manage your account</p>
             </div>
 
         </div>
@@ -318,6 +420,134 @@
 
     </nav>
 
+
+    <div class="photo-viewer" id="photoViewer" role="dialog" aria-modal="true" aria-label="Profile photo preview" hidden>
+        <img class="photo-viewer-image" id="photoViewerImage" alt="Larger profile photo">
+        <button class="close-photo-preview" id="closePhotoPreview" type="button" aria-label="Return photo to profile circle" title="Back to profile">×</button>
+    </div>
+    <script>
+        (() => {
+            const legacyStorageKey = 'zovya.profilePhoto.v1';
+            const photoKeyPrefix = 'zovya.profilePhoto.user.';
+            let currentStorageKey = '';
+            const fileInput = document.getElementById('profilePhotoInput');
+            const chooseButton = document.getElementById('profilePhotoButton');
+            const photo = document.getElementById('profilePhoto');
+            const placeholder = document.getElementById('profilePlaceholder');
+            const viewer = document.getElementById('photoViewer');
+            const viewerImage = document.getElementById('photoViewerImage');
+            const closeButton = document.getElementById('closePhotoPreview');
+
+            function showPhoto(dataUrl) {
+                if (!dataUrl || !/^data:image\/(jpeg|png|webp);base64,/i.test(dataUrl)) {
+                    photo.removeAttribute('src');
+                    photo.hidden = true;
+                    placeholder.hidden = false;
+                    return;
+                }
+                photo.src = dataUrl;
+                photo.hidden = false;
+                placeholder.hidden = true;
+            }
+
+            showPhoto(null);
+            async function loadAccountDetails() {
+                try {
+                    const response = await fetch('/api/me', { cache: 'no-store' });
+                    if (!response.ok) return;
+                    const result = await response.json();
+                    if (result.authenticated && result.user) {
+                        const userId = String(result.user.id);
+                        currentStorageKey = photoKeyPrefix + userId;
+                        const oldPhoto = localStorage.getItem(legacyStorageKey);
+                        if (oldPhoto) {
+                            if (!localStorage.getItem(currentStorageKey)) {
+                                localStorage.setItem(currentStorageKey, oldPhoto);
+                            }
+                            localStorage.removeItem(legacyStorageKey);
+                        }
+                        showPhoto(localStorage.getItem(currentStorageKey));
+                        document.getElementById('accountUserName').textContent = result.user.name;
+                        document.getElementById('accountUserInfo').textContent = 'User ID: ' + userId;
+                    }
+                } catch (error) {
+                    // Keep the guest view when the page is opened outside the local web server.
+                }
+            }
+
+            loadAccountDetails();
+
+            photo.addEventListener('click', () => {
+                if (photo.hidden) return;
+                viewerImage.src = photo.src;
+                viewer.hidden = false;
+            });
+
+            viewer.addEventListener('click', event => {
+                if (event.target === viewer) viewer.hidden = true;
+            });
+
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape') viewer.hidden = true;
+            });
+
+            closeButton.addEventListener('click', () => {
+                viewer.hidden = true;
+            });
+
+            chooseButton.addEventListener('click', () => {
+                if (!currentStorageKey) {
+                    alert('Please log in first so this photo can be saved to your account.');
+                    window.location.href = '/Login.HTML';
+                    return;
+                }
+                fileInput.click();
+            });
+            fileInput.addEventListener('change', async () => {
+                const file = fileInput.files && fileInput.files[0];
+                if (!file) return;
+                if (!file.type.startsWith('image/')) {
+                    alert('Please select an image file.');
+                    fileInput.value = '';
+                    return;
+                }
+
+                try {
+                    const imageUrl = URL.createObjectURL(file);
+                    const image = await new Promise((resolve, reject) => {
+                        const loadedImage = new Image();
+                        loadedImage.onload = () => resolve(loadedImage);
+                        loadedImage.onerror = () => reject(new Error('This image could not be opened.'));
+                        loadedImage.src = imageUrl;
+                    });
+                    URL.revokeObjectURL(imageUrl);
+
+                    const maxSize = 600;
+                    const scale = Math.min(1, maxSize / Math.max(image.naturalWidth, image.naturalHeight));
+                    const canvas = document.createElement('canvas');
+                    canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+                    canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+                    canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+
+                    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.82));
+                    if (!blob) throw new Error('The image could not be prepared.');
+                    const dataUrl = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = () => reject(new Error('The image could not be saved.'));
+                        reader.readAsDataURL(blob);
+                    });
+
+                    localStorage.setItem(currentStorageKey, dataUrl);
+                    showPhoto(dataUrl);
+                } catch (error) {
+                    alert('Could not save this photo. Try another image or a smaller file.');
+                } finally {
+                    fileInput.value = '';
+                }
+            });
+        })();
+    </script>
 </body>
 
 </html>
