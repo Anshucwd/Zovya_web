@@ -1,0 +1,22 @@
+# Copy this file to database.properties, then set values only on your own computer.
+db.url=jdbc:mysql://127.0.0.1:3306/zovya_gifts?createDatabaseIfNotExist=true&serverTimezone=UTC
+db.username=root
+db.password=CHANGE_ME
+server.port=8000
+web.root=.
+
+# Email OTP through Gmail SMTP. Use a Google App Password, not your Gmail password.
+smtp.host=smtp.gmail.com
+smtp.port=465
+smtp.username=
+smtp.appPassword=
+smtp.from=
+
+# SMS OTP through Twilio. Set either twilio.from or twilio.messagingServiceSid.
+twilio.accountSid=
+twilio.authToken=
+twilio.from=
+twilio.messagingServiceSid=
+
+# The backend fills this in automatically on first start; keep the generated value private.
+otp.hmacSecret=CHANGE_ME

@@ -144,6 +144,212 @@
             margin: 20px 0 10px;
         }
 
+        .account-details-list {
+            display: grid;
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .account-detail-row {
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: #faf5fa;
+            overflow-wrap: anywhere;
+        }
+
+        .account-detail-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #777;
+            font-size: 12px;
+        }
+
+        .account-detail-value {
+            font-size: 15px;
+        }
+
+        .account-edit-form {
+            display: grid;
+            gap: 9px;
+            margin-top: 14px;
+        }
+
+        .account-edit-form[hidden] {
+            display: none;
+        }
+
+        .account-edit-form label {
+            margin-top: 5px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .account-edit-form input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d8c8d3;
+            border-radius: 8px;
+            font: inherit;
+        }
+
+        .account-edit-form input:focus {
+            outline: 2px solid #e7abd9;
+            border-color: #9f2089;
+        }
+
+        .account-edit-form input[readonly] {
+            background: #f4f0f3;
+            color: #666;
+        }
+
+        .save-account-button,
+        .cancel-account-button {
+            min-height: 44px;
+            padding: 11px 15px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .save-account-button {
+            background: linear-gradient(135deg, #a92d94, #80176f);
+            color: white;
+            box-shadow: 0 5px 12px rgba(128, 23, 111, .18);
+        }
+
+        .cancel-account-button {
+            border-color: #ead8e7;
+            background: white;
+            color: #6f4268;
+        }
+
+        .save-account-button:hover:not(:disabled) {
+            background: linear-gradient(135deg, #982482, #6f125f);
+        }
+
+        .cancel-account-button:hover {
+            background: #fbf4fa;
+            border-color: #dcb8d5;
+        }
+
+        .save-account-button:focus-visible,
+        .cancel-account-button:focus-visible,
+        .account-action-button:focus-visible {
+            outline: 3px solid #e5b3dc;
+            outline-offset: 3px;
+        }
+
+        .save-account-button:disabled {
+            opacity: .65;
+            cursor: wait;
+        }
+
+        .account-actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin: 14px 0 6px;
+        }
+
+        .account-actions[hidden] {
+            display: none;
+        }
+
+        @media (max-width: 360px) {
+            .account-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .account-action-button {
+                min-height: 76px;
+            }
+        }
+
+        .account-action-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            min-height: 88px;
+            padding: 13px 11px;
+            border: 1px solid #f0d8eb;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #fff 0%, #fff7fc 100%);
+            color: #51224a;
+            text-align: left;
+            cursor: pointer;
+            box-shadow: 0 5px 16px rgba(128, 23, 111, .08);
+            transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+        }
+
+        .account-action-button:hover {
+            transform: translateY(-2px);
+            border-color: #d9a8d0;
+            box-shadow: 0 9px 20px rgba(128, 23, 111, .14);
+        }
+
+        .account-action-icon {
+            display: grid;
+            place-items: center;
+            flex: 0 0 38px;
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: #f8e8f4;
+            color: #8e2875;
+            font-size: 19px;
+        }
+
+        .account-action-copy {
+            display: grid;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .account-action-copy strong {
+            font-size: 13px;
+        }
+
+        .account-action-copy small {
+            color: #806d7c;
+            font-size: 10px;
+            line-height: 1.35;
+        }
+
+        .account-action-chevron {
+            margin-left: auto;
+            color: #9f2089;
+            font-size: 22px;
+        }
+
+        .edit-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .edit-actions button {
+            flex: 1;
+        }
+
+        .account-status,
+        .account-guest-notice,
+        .account-note {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .account-status:empty {
+            display: none;
+        }
+
+        .account-status[data-error="true"] {
+            color: #a21d36;
+        }
+
         .option {
             display: flex;
             align-items: center;
@@ -324,6 +530,87 @@
 
     </div>
 
+    <!-- Personal Details -->
+    <section class="section" id="personalDetailsSection">
+        <h3>Personal details</h3>
+        <p class="account-guest-notice" id="accountGuestNotice">
+            Sign in to view or edit your account details. <a href="Login.HTML">Login</a>
+        </p>
+        <div id="personalDetails" hidden>
+            <div class="account-details-list">
+                <div class="account-detail-row">
+                    <span class="account-detail-label">User ID</span>
+                    <span class="account-detail-value" id="detailUserId"></span>
+                </div>
+                <div class="account-detail-row">
+                    <span class="account-detail-label">Name</span>
+                    <span class="account-detail-value" id="detailName"></span>
+                </div>
+                <div class="account-detail-row">
+                    <span class="account-detail-label">Email</span>
+                    <span class="account-detail-value" id="detailEmail"></span>
+                </div>
+                <div class="account-detail-row">
+                    <span class="account-detail-label">Phone</span>
+                    <span class="account-detail-value" id="detailPhone"></span>
+                </div>
+            </div>
+            <div class="account-actions" id="accountActions">
+                <button class="account-action-button" id="editDetailsButton" type="button">
+                    <span class="account-action-icon" aria-hidden="true">✎</span>
+                    <span class="account-action-copy"><strong>Edit details</strong><small>Name, email and phone</small></span>
+                    <span class="account-action-chevron" aria-hidden="true">›</span>
+                </button>
+                <button class="account-action-button" id="changePasswordButton" type="button">
+                    <span class="account-action-icon" aria-hidden="true">🔒</span>
+                    <span class="account-action-copy"><strong>Change password</strong><small>Update your sign-in password</small></span>
+                    <span class="account-action-chevron" aria-hidden="true">›</span>
+                </button>
+            </div>
+            <p class="account-status" id="accountStatusMessage" role="status" aria-live="polite"></p>
+
+            <form class="account-edit-form" id="editAccountForm" hidden>
+                <label for="editUserId">User ID</label>
+                <input id="editUserId" type="text" readonly>
+                <p class="account-note">Your User ID is permanent and cannot be changed.</p>
+
+                <label for="editName">Name</label>
+                <input id="editName" name="name" type="text" maxlength="120" autocomplete="name" required>
+
+                <label for="editEmail">Email</label>
+                <input id="editEmail" name="email" type="email" maxlength="190" autocomplete="email" required>
+
+                <label for="editPhone">Phone</label>
+                <input id="editPhone" name="phone" type="tel" maxlength="32" autocomplete="tel" required>
+
+                <div class="edit-actions">
+                    <button class="save-account-button" id="saveAccountButton" type="submit">Save changes</button>
+                    <button class="cancel-account-button" id="cancelEditButton" type="button">Cancel</button>
+                </div>
+                <p class="account-status" id="editStatus" role="status" aria-live="polite"></p>
+            </form>
+
+            <div class="password-edit-section">
+                <form class="account-edit-form" id="changePasswordForm" hidden>
+                    <label for="currentPassword">Current password</label>
+                    <input id="currentPassword" type="password" autocomplete="current-password" required>
+
+                    <label for="newPassword">New password</label>
+                    <input id="newPassword" type="password" minlength="8" autocomplete="new-password" required>
+
+                    <label for="confirmNewPassword">Confirm new password</label>
+                    <input id="confirmNewPassword" type="password" minlength="8" autocomplete="new-password" required>
+
+                    <div class="edit-actions">
+                        <button class="save-account-button" id="savePasswordButton" type="submit">Save password</button>
+                        <button class="cancel-account-button" id="cancelPasswordButton" type="button">Cancel</button>
+                    </div>
+                    <p class="account-status" id="passwordStatus" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <!-- Quick Options -->
     <div class="quick-options">
 
@@ -437,6 +724,38 @@
             const viewer = document.getElementById('photoViewer');
             const viewerImage = document.getElementById('photoViewerImage');
             const closeButton = document.getElementById('closePhotoPreview');
+            const personalDetails = document.getElementById('personalDetails');
+            const guestNotice = document.getElementById('accountGuestNotice');
+            const accountActions = document.getElementById('accountActions');
+            const accountStatusMessage = document.getElementById('accountStatusMessage');
+            const editButton = document.getElementById('editDetailsButton');
+            const editForm = document.getElementById('editAccountForm');
+            const cancelEditButton = document.getElementById('cancelEditButton');
+            const saveButton = document.getElementById('saveAccountButton');
+            const editStatus = document.getElementById('editStatus');
+            const changePasswordButton = document.getElementById('changePasswordButton');
+            const changePasswordForm = document.getElementById('changePasswordForm');
+            const cancelPasswordButton = document.getElementById('cancelPasswordButton');
+            const savePasswordButton = document.getElementById('savePasswordButton');
+            const passwordStatus = document.getElementById('passwordStatus');
+            let accountData = null;
+
+            function showAccountData(user) {
+                accountData = user;
+                const userId = String(user.id || user.userId || '');
+                document.getElementById('detailUserId').textContent = userId;
+                document.getElementById('detailName').textContent = user.name || '';
+                document.getElementById('detailEmail').textContent = user.email || '';
+                document.getElementById('detailPhone').textContent = user.phone || '';
+                document.getElementById('editUserId').value = userId;
+                document.getElementById('editName').value = user.name || '';
+                document.getElementById('editEmail').value = user.email || '';
+                document.getElementById('editPhone').value = user.phone || '';
+                document.getElementById('accountUserName').textContent = user.name || 'ZOVYA account';
+                document.getElementById('accountUserInfo').textContent = 'User ID: ' + userId;
+                personalDetails.hidden = false;
+                guestNotice.hidden = true;
+            }
 
             function showPhoto(dataUrl) {
                 if (!dataUrl || !/^data:image\/(jpeg|png|webp);base64,/i.test(dataUrl)) {
@@ -467,8 +786,10 @@
                             localStorage.removeItem(legacyStorageKey);
                         }
                         showPhoto(localStorage.getItem(currentStorageKey));
-                        document.getElementById('accountUserName').textContent = result.user.name;
-                        document.getElementById('accountUserInfo').textContent = 'User ID: ' + userId;
+                        showAccountData(result.user);
+                    } else {
+                        guestNotice.hidden = false;
+                        personalDetails.hidden = true;
                     }
                 } catch (error) {
                     // Keep the guest view when the page is opened outside the local web server.
@@ -476,6 +797,116 @@
             }
 
             loadAccountDetails();
+
+            editButton.addEventListener('click', () => {
+                if (!accountData) return;
+                showAccountData(accountData);
+                editStatus.textContent = '';
+                editStatus.removeAttribute('data-error');
+                accountStatusMessage.textContent = '';
+                accountActions.hidden = true;
+                editForm.hidden = false;
+                document.getElementById('editName').focus();
+            });
+
+            cancelEditButton.addEventListener('click', () => {
+                if (accountData) showAccountData(accountData);
+                editForm.hidden = true;
+                accountActions.hidden = false;
+                editStatus.textContent = '';
+                editStatus.removeAttribute('data-error');
+            });
+
+            editForm.addEventListener('submit', async event => {
+                event.preventDefault();
+                editStatus.textContent = '';
+                editStatus.removeAttribute('data-error');
+                saveButton.disabled = true;
+                try {
+                    const body = new URLSearchParams({
+                        name: document.getElementById('editName').value.trim(),
+                        email: document.getElementById('editEmail').value.trim(),
+                        phone: document.getElementById('editPhone').value.trim()
+                    });
+                    const response = await fetch('/api/me', {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+                        body: body.toString()
+                    });
+                    const result = await response.json();
+                    if (!response.ok) {
+                        editStatus.textContent = result.message || 'Could not save your details. Please try again.';
+                        editStatus.dataset.error = 'true';
+                        return;
+                    }
+                    showAccountData(result.user);
+                    editForm.hidden = true;
+                    accountActions.hidden = false;
+                    accountStatusMessage.textContent = 'Your details have been updated.';
+                } catch (error) {
+                    editStatus.textContent = 'Could not connect to the server. Please try again.';
+                    editStatus.dataset.error = 'true';
+                } finally {
+                    saveButton.disabled = false;
+                }
+            });
+
+            changePasswordButton.addEventListener('click', () => {
+                passwordStatus.textContent = '';
+                passwordStatus.removeAttribute('data-error');
+                accountStatusMessage.textContent = '';
+                accountActions.hidden = true;
+                changePasswordForm.hidden = false;
+                document.getElementById('currentPassword').focus();
+            });
+
+            cancelPasswordButton.addEventListener('click', () => {
+                changePasswordForm.reset();
+                changePasswordForm.hidden = true;
+                accountActions.hidden = false;
+                passwordStatus.textContent = '';
+                passwordStatus.removeAttribute('data-error');
+            });
+
+            changePasswordForm.addEventListener('submit', async event => {
+                event.preventDefault();
+                passwordStatus.textContent = '';
+                passwordStatus.removeAttribute('data-error');
+                const newPassword = document.getElementById('newPassword').value;
+                if (newPassword !== document.getElementById('confirmNewPassword').value) {
+                    passwordStatus.textContent = 'The new passwords do not match.';
+                    passwordStatus.dataset.error = 'true';
+                    return;
+                }
+
+                savePasswordButton.disabled = true;
+                try {
+                    const body = new URLSearchParams({
+                        currentPassword: document.getElementById('currentPassword').value,
+                        newPassword
+                    });
+                    const response = await fetch('/api/me/password', {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+                        body: body.toString()
+                    });
+                    const result = await response.json();
+                    if (!response.ok) {
+                        passwordStatus.textContent = result.message || 'Could not update your password. Please try again.';
+                        passwordStatus.dataset.error = 'true';
+                        return;
+                    }
+                    changePasswordForm.reset();
+                    changePasswordForm.hidden = true;
+                    accountActions.hidden = false;
+                    accountStatusMessage.textContent = result.message || 'Your password has been updated.';
+                } catch (error) {
+                    passwordStatus.textContent = 'Could not connect to the server. Please try again.';
+                    passwordStatus.dataset.error = 'true';
+                } finally {
+                    savePasswordButton.disabled = false;
+                }
+            });
 
             photo.addEventListener('click', () => {
                 if (photo.hidden) return;
